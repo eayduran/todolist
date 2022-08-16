@@ -1,55 +1,297 @@
 import React from 'react';
 import { useState } from 'react';
 import './App.css';
+// import Trash from './assets/icons/trash.svg';
+import Check from './assets/icons/check.svg';
+import Circle from './assets/icons/circle2.svg';
+import Plus from './assets/icons/plus.svg';
 
 const App: React.FC = () => {
-
-  const [addWord, setAddword] = useState(['']);
+  const [bubblecolor ,setBubblecolor] = useState<string>('rgb(222,22,22)')
+  const [trashcolor ,setTrashcolor] = useState<string>('rgb(222,222,222)')
+  const [donetrashcolor ,setDoneTrashcolor] = useState<string>('rgb(222,22,22)')
+  const [alltrash ,setAlltrash] = useState<string>('rgb(222,22,22)')
+  const [arr, setArr] = useState(['*'])
+  const [done, setDone] = useState([''])
 
   return (
-    <div className="flex justify-center items-center w-full h-screen bg-gray-300">
-      <div className=''>
+    <div className="bg-gray-400 h-screen flex items-center justify-center">
 
-        <h1 className="text-white text-3xl font-bold">
-          ToDo App
-        </h1>
+    <div className='flex flex-col items-between bg-white'>
+      <div className='bg-blue-200 h-80 w-80'>
+        
+          {/* header */}
+          <div className='flex items-center justify-between bg-red-200 w-full h-14 px-4 border-b-2 border-black'>
+              <div className='flex'>
+                <div className='bg-black w-6 h-6 flex items-center justify-center rounded-md'>
+                  <img src={Check} alt="Check" />
+                </div>
+                <div className='ml-4 text-black'>
+                  Todo
+                </div>
+              </div>
 
-        <div id='header' className='flex flex-row'>
-          <form>
-            <label>
-              <input id='input' className='rounded-l-xl w-60 h-12 text-center' type="text" name="name" placeholder='Create a new todo...'/>
-            </label>
-            {/* <input className='bg-green-200 rounded-xl w-28 h-12' type="submit" value="Submit" /> */}
-          </form>
-            <div onClick={()=>{
-              const inputVal = document.getElementById('input') as HTMLInputElement;
-              if(inputVal !== null && inputVal.value !== ''){
-                setAddword([inputVal?.value, ...addWord]);
-                inputVal.value = '';
+              <div className='icon'>
+                x
+              </div>
+          </div>
+
+          {/* tasks */}
+          <div>
+
+            <div className='flex ml-6 my-4 justify-between items-center'>
+              <div onClick={()=>{
+                console.log("arr:",arr)
+              }}>
+                Tasks
+              </div>
+              <div className='mr-4 hover:bg-red-200'>
+                <img src={Check} alt="Check" />
+              </div>
+            </div>
+
+              {
+                arr.map((word,i) => {
+                  if(word==='*'){  
+                    return null
+                  }
+                  else{
+
+                    return(
+
+                    
+                      <div key={i}>
+                      
+                    <div className='flex group justify-between h-12s py-2 bg-green-200'>
+
+                      <div id='testx' className='flex'>
+                        <div className='w-5 h-8 flex items-center justify-center' onMouseEnter={()=>{setBubblecolor('rgb(22,22,22)')}} onMouseLeave={()=>{setBubblecolor('rgb(222,22,22)')}}>
+                          <svg className='hover:cursor-pointer' width="20px" height="20px" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                            <path style={{fill: bubblecolor}} className='transition-opacity opacity-0 group-hover:opacity-100' d="M15.5 17C16.3284 17 17 17.6716 17 18.5C17 19.3284 16.3284 20 15.5 20C14.6716 20 14 19.3284 14 18.5C14 17.6716 14.6716 17 15.5 17ZM8.5 17C9.32843 17 10 17.6716 10 18.5C10 19.3284 9.32843 20 8.5 20C7.67157 20 7 19.3284 7 18.5C7 17.6716 7.67157 17 8.5 17ZM15.5 10C16.3284 10 17 10.6716 17 11.5C17 12.3284 16.3284 13 15.5 13C14.6716 13 14 12.3284 14 11.5C14 10.6716 14.6716 10 15.5 10ZM8.5 10C9.32843 10 10 10.6716 10 11.5C10 12.3284 9.32843 13 8.5 13C7.67157 13 7 12.3284 7 11.5C7 10.6716 7.67157 10 8.5 10ZM15.5 3C16.3284 3 17 3.67157 17 4.5C17 5.32843 16.3284 6 15.5 6C14.6716 6 14 5.32843 14 4.5C14 3.67157 14.6716 3 15.5 3ZM8.5 3C9.32843 3 10 3.67157 10 4.5C10 5.32843 9.32843 6 8.5 6C7.67157 6 7 5.32843 7 4.5C7 3.67157 7.67157 3 8.5 3Z"/>
+                          </svg>
+                        </div>
+
+                        <div onClick={()=>{
+                          console.log("circ:",arr,arr[i],i)
+                          setDone([arr[i],...done])
+                          arr.splice(i,1)
+                          setArr([...arr])
+
+                        }} className='transition transition-colors flex items-center justify-center hover:cursor-pointer hover:bg-red-200 w-8 h-8 rounded-xl'>
+                          <img src={Circle} alt="Check" />
+                        </div>
+                      </div>
+
+                      <div className='w-56 bg-red-200 hover:cursor-texts'>
+                        {
+                          arr[i]!==''
+                          ?
+                          <div
+                          onInput={(event)=>{
+                            let temp: any;
+                            temp = arr;
+                            temp[i] = event.currentTarget.textContent;
+                            setArr(temp);
+                          }}  
+                          contentEditable className='w-56 h-8 outline-none flex items-center bg-white'>{arr[i]}</div>
+                          :
+                          <input autoFocus
+                          onBlur={(event)=>{
+                            if(event.target.value ===''){
+                              arr.splice(i,1)
+                              setArr([...arr])
+                            }
+                          }} 
+                          onChange={(event)=>{
+                            let ids = arr;
+                            ids[i] = event.target.value;
+                            setArr(ids)
+                            // setArr([...arr])
+                            console.log('here',done.length,arr)
+                          }} className='w-56 h-8 outline-none' type="text" id="fname" name="fname"></input>
+                        }
+
+                      </div>
+
+                      <div onClick={()=>{
+                        arr.splice(i,1)
+                        setArr([...arr])
+                        }} className='flex bg-blue-200 items-center justify-center h-8 w-8 mr-2 hover:cursor-pointer' onMouseEnter={()=>{setTrashcolor('rgb(22,22,22)')}} onMouseLeave={()=>{setTrashcolor('rgb(222,22,22)')}}>
+                        {/* <img src={Trash} alt="Trash" className='transition-opacity opacity-0 group-hover:opacity-100 hover:stroke-white'/> */}
+                        <svg className='transition-opacity opacity-0 group-hover:opacity-100' width="24px" height="24px" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                        <path style={{fill: trashcolor}} fillRule="evenodd" clipRule="evenodd" d="M5.8662 8.15407C6.29365 8.16442 6.63173 8.5171 6.62131 8.94181L5.84735 8.92308L5.07338 8.90434C5.0838 8.47963 5.43876 8.14373 5.8662 8.15407ZM5.84735 8.92308C5.07338 8.90434 5.07338 8.90434 5.07338 8.90434L5.07235 8.94807L5.06956 9.07238C5.06721 9.18044 5.06396 9.33725 5.06034 9.53284C5.05312 9.92395 5.04446 10.4705 5.03868 11.0925C5.02716 12.333 5.02698 13.8865 5.07371 15.1062C5.12484 16.4402 5.26247 18.1669 5.37603 19.4527C5.50429 20.9048 6.73177 22 8.18698 22H15.813C17.2682 22 18.4957 20.9048 18.624 19.4527C18.7375 18.1669 18.8752 16.4402 18.9263 15.1062C18.973 13.8865 18.9728 12.333 18.9613 11.0925C18.9555 10.4705 18.9469 9.92395 18.9397 9.53284C18.936 9.33725 18.9328 9.18044 18.9304 9.07238L18.9277 8.94807L18.9266 8.90515C18.9162 8.48044 18.5612 8.14373 18.1338 8.15407C17.7063 8.16442 17.3683 8.5171 17.3787 8.94181L17.8719 8.92987C17.3787 8.94181 17.3787 8.94181 17.3787 8.94181L17.3797 8.98354L17.3824 9.10565C17.3847 9.2122 17.388 9.36732 17.3915 9.56106C17.3987 9.94862 17.4073 10.4903 17.413 11.1067C17.4245 12.3427 17.4243 13.8661 17.379 15.0477C17.3295 16.3412 17.1948 18.0358 17.0815 19.3182C17.0245 19.9641 16.4774 20.4615 15.813 20.4615H8.18698C7.52258 20.4615 6.97554 19.9641 6.91849 19.3182C6.80522 18.0358 6.67055 16.3412 6.62098 15.0477C6.5757 13.8661 6.57552 12.3427 6.587 11.1067C6.59273 10.4903 6.60132 9.94862 6.60847 9.56106C6.61205 9.36732 6.61527 9.2122 6.61759 9.10565L6.62032 8.98354L6.62131 8.94181L5.84735 8.92308Z"/>
+                        <path style={{fill: trashcolor}} fillRule="evenodd" clipRule="evenodd" d="M4 5.84615C4 5.42132 4.34662 5.07692 4.77419 5.07692H19.2258C19.6534 5.07692 20 5.42132 20 5.84615C20 6.27099 19.6534 6.61539 19.2258 6.61539H4.77419C4.34662 6.61539 4 6.27099 4 5.84615Z"/>
+                        <path style={{fill: trashcolor}} fillRule="evenodd" clipRule="evenodd" d="M8.25655 3.49321C8.7499 2.57411 9.71292 2 10.7613 2H13.2387C14.2871 2 15.2501 2.57411 15.7435 3.49321L16.8121 5.48416C17.0134 5.85902 16.8706 6.32497 16.4934 6.52489C16.1161 6.72481 15.6471 6.583 15.4459 6.20815L14.3772 4.21719C14.153 3.79942 13.7152 3.53846 13.2387 3.53846H10.7613C10.2848 3.53846 9.84702 3.79942 9.62277 4.21719L8.55408 6.20815C8.35287 6.583 7.88391 6.72481 7.50664 6.52489C7.12937 6.32497 6.98664 5.85902 7.18786 5.48416L8.25655 3.49321Z"/>
+                        </svg>
+                      </div>
+
+                    </div>
+                    
+                    
+                    </div>
+                    );
+                  }})
               }
-            }} className='rounded-r-xl w-28 h-12 flex items-center justify-center bg-red-200'>
-              Sumbit
+                  
+
+            <div id='additem' onClick={(event)=>{
+                setArr([...arr,''])
+            }} 
+            className='transition-colors hover:bg-gray-200 ml-6 mt-2 bg-white items-center justify-center flex w-32 h-12 rounded-md'>
+              <div className='w-4 h-4 mr-4'>
+                <img src={Plus} alt="Plus" />
+              </div>
+              <div>
+                Add item
+              </div>
             </div>
+          
+          </div>
         </div>
 
-        <ul className='mt-10'>
-            {
-              addWord.map((word,i) => <li key={i}>{word}</li>)  
-            }
-        </ul>
-        <div className='flex mt-10'>
-            <div className='mr-20'>
-              total task:{addWord.length - 1}
-            </div>
-            <div onClick={()=>{
-                setAddword(['']);
-            }}>
-              delete all
-            </div>
-        </div>
+          {/* completed */}
+          <div style={done.length===1?{display: 'none'}:{display: 'flex'}} className='hiddens flex flex-col bg-red-300 border-t-2 border-black'>
+              
+              <div className='flex group justify-between'>
+                <div className='flex'>
+                  <div className=''>
+                    dowb
+                  </div>
+                  <div className=''>
+                    Completed
+                  </div>
+                </div>
+                <div onClick={()=>{
+                  setDone([''])
+                  }} className='flex items-center justify-center h-8 w-8 mr-2 hover:cursor-pointer' onMouseEnter={()=>{setAlltrash('rgb(22,22,22)')}} onMouseLeave={()=>{setAlltrash('rgb(222,22,22)')}}>
+                  {/* <img src={Trash} alt="Trash" className='transition-opacity opacity-0 group-hover:opacity-100 hover:stroke-white'/> */}
+                  <svg className='transition-opacity opacity-0 group-hover:opacity-100' width="24px" height="24px" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                  <path style={{fill: alltrash}} fillRule="evenodd" clipRule="evenodd" d="M5.8662 8.15407C6.29365 8.16442 6.63173 8.5171 6.62131 8.94181L5.84735 8.92308L5.07338 8.90434C5.0838 8.47963 5.43876 8.14373 5.8662 8.15407ZM5.84735 8.92308C5.07338 8.90434 5.07338 8.90434 5.07338 8.90434L5.07235 8.94807L5.06956 9.07238C5.06721 9.18044 5.06396 9.33725 5.06034 9.53284C5.05312 9.92395 5.04446 10.4705 5.03868 11.0925C5.02716 12.333 5.02698 13.8865 5.07371 15.1062C5.12484 16.4402 5.26247 18.1669 5.37603 19.4527C5.50429 20.9048 6.73177 22 8.18698 22H15.813C17.2682 22 18.4957 20.9048 18.624 19.4527C18.7375 18.1669 18.8752 16.4402 18.9263 15.1062C18.973 13.8865 18.9728 12.333 18.9613 11.0925C18.9555 10.4705 18.9469 9.92395 18.9397 9.53284C18.936 9.33725 18.9328 9.18044 18.9304 9.07238L18.9277 8.94807L18.9266 8.90515C18.9162 8.48044 18.5612 8.14373 18.1338 8.15407C17.7063 8.16442 17.3683 8.5171 17.3787 8.94181L17.8719 8.92987C17.3787 8.94181 17.3787 8.94181 17.3787 8.94181L17.3797 8.98354L17.3824 9.10565C17.3847 9.2122 17.388 9.36732 17.3915 9.56106C17.3987 9.94862 17.4073 10.4903 17.413 11.1067C17.4245 12.3427 17.4243 13.8661 17.379 15.0477C17.3295 16.3412 17.1948 18.0358 17.0815 19.3182C17.0245 19.9641 16.4774 20.4615 15.813 20.4615H8.18698C7.52258 20.4615 6.97554 19.9641 6.91849 19.3182C6.80522 18.0358 6.67055 16.3412 6.62098 15.0477C6.5757 13.8661 6.57552 12.3427 6.587 11.1067C6.59273 10.4903 6.60132 9.94862 6.60847 9.56106C6.61205 9.36732 6.61527 9.2122 6.61759 9.10565L6.62032 8.98354L6.62131 8.94181L5.84735 8.92308Z"/>
+                  <path style={{fill: alltrash}} fillRule="evenodd" clipRule="evenodd" d="M4 5.84615C4 5.42132 4.34662 5.07692 4.77419 5.07692H19.2258C19.6534 5.07692 20 5.42132 20 5.84615C20 6.27099 19.6534 6.61539 19.2258 6.61539H4.77419C4.34662 6.61539 4 6.27099 4 5.84615Z"/>
+                  <path style={{fill: alltrash}} fillRule="evenodd" clipRule="evenodd" d="M8.25655 3.49321C8.7499 2.57411 9.71292 2 10.7613 2H13.2387C14.2871 2 15.2501 2.57411 15.7435 3.49321L16.8121 5.48416C17.0134 5.85902 16.8706 6.32497 16.4934 6.52489C16.1161 6.72481 15.6471 6.583 15.4459 6.20815L14.3772 4.21719C14.153 3.79942 13.7152 3.53846 13.2387 3.53846H10.7613C10.2848 3.53846 9.84702 3.79942 9.62277 4.21719L8.55408 6.20815C8.35287 6.583 7.88391 6.72481 7.50664 6.52489C7.12937 6.32497 6.98664 5.85902 7.18786 5.48416L8.25655 3.49321Z"/>
+                  </svg>
+                </div>   
+              </div>
+                        
+              {
+                done.map((word,keyf)=>{
+                  if(word===''){
+                    return null
+                  }
+                  else{
+                    return(
+                    <div className='flex justify-between group items-center' key={keyf}>
+                     
+                     <div className='flex'>
+                        <div onClick={()=>{
+                          arr.splice(1, 0, word);
+                          setArr([...arr])
+
+                          done.splice(keyf,1)
+                          setDone([...done])
+                        }} 
+                        className='hover:bg-black duration-200 transition-colors w-6 h-6 flex items-center justify-center rounded-xl'>
+                          <img src={Check} alt="Check" />
+                        </div>
+                        <div>
+                        {keyf}.{word}
+                        </div>
+                      </div>
+                      <div onClick={()=>{
+                        done.splice(keyf,1)
+                        setDone([...done])
+                        }} className='flex items-center justify-center h-8 w-8 mr-2 hover:cursor-pointer' onMouseEnter={()=>{setDoneTrashcolor('rgb(22,22,22)')}} onMouseLeave={()=>{setDoneTrashcolor('rgb(222,22,22)')}}>
+                        {/* <img src={Trash} alt="Trash" className='transition-opacity opacity-0 group-hover:opacity-100 hover:stroke-white'/> */}
+                        <svg className='transition-opacity opacity-0 group-hover:opacity-100' width="24px" height="24px" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                        <path style={{fill: donetrashcolor}} fillRule="evenodd" clipRule="evenodd" d="M5.8662 8.15407C6.29365 8.16442 6.63173 8.5171 6.62131 8.94181L5.84735 8.92308L5.07338 8.90434C5.0838 8.47963 5.43876 8.14373 5.8662 8.15407ZM5.84735 8.92308C5.07338 8.90434 5.07338 8.90434 5.07338 8.90434L5.07235 8.94807L5.06956 9.07238C5.06721 9.18044 5.06396 9.33725 5.06034 9.53284C5.05312 9.92395 5.04446 10.4705 5.03868 11.0925C5.02716 12.333 5.02698 13.8865 5.07371 15.1062C5.12484 16.4402 5.26247 18.1669 5.37603 19.4527C5.50429 20.9048 6.73177 22 8.18698 22H15.813C17.2682 22 18.4957 20.9048 18.624 19.4527C18.7375 18.1669 18.8752 16.4402 18.9263 15.1062C18.973 13.8865 18.9728 12.333 18.9613 11.0925C18.9555 10.4705 18.9469 9.92395 18.9397 9.53284C18.936 9.33725 18.9328 9.18044 18.9304 9.07238L18.9277 8.94807L18.9266 8.90515C18.9162 8.48044 18.5612 8.14373 18.1338 8.15407C17.7063 8.16442 17.3683 8.5171 17.3787 8.94181L17.8719 8.92987C17.3787 8.94181 17.3787 8.94181 17.3787 8.94181L17.3797 8.98354L17.3824 9.10565C17.3847 9.2122 17.388 9.36732 17.3915 9.56106C17.3987 9.94862 17.4073 10.4903 17.413 11.1067C17.4245 12.3427 17.4243 13.8661 17.379 15.0477C17.3295 16.3412 17.1948 18.0358 17.0815 19.3182C17.0245 19.9641 16.4774 20.4615 15.813 20.4615H8.18698C7.52258 20.4615 6.97554 19.9641 6.91849 19.3182C6.80522 18.0358 6.67055 16.3412 6.62098 15.0477C6.5757 13.8661 6.57552 12.3427 6.587 11.1067C6.59273 10.4903 6.60132 9.94862 6.60847 9.56106C6.61205 9.36732 6.61527 9.2122 6.61759 9.10565L6.62032 8.98354L6.62131 8.94181L5.84735 8.92308Z"/>
+                        <path style={{fill: donetrashcolor}} fillRule="evenodd" clipRule="evenodd" d="M4 5.84615C4 5.42132 4.34662 5.07692 4.77419 5.07692H19.2258C19.6534 5.07692 20 5.42132 20 5.84615C20 6.27099 19.6534 6.61539 19.2258 6.61539H4.77419C4.34662 6.61539 4 6.27099 4 5.84615Z"/>
+                        <path style={{fill: donetrashcolor}} fillRule="evenodd" clipRule="evenodd" d="M8.25655 3.49321C8.7499 2.57411 9.71292 2 10.7613 2H13.2387C14.2871 2 15.2501 2.57411 15.7435 3.49321L16.8121 5.48416C17.0134 5.85902 16.8706 6.32497 16.4934 6.52489C16.1161 6.72481 15.6471 6.583 15.4459 6.20815L14.3772 4.21719C14.153 3.79942 13.7152 3.53846 13.2387 3.53846H10.7613C10.2848 3.53846 9.84702 3.79942 9.62277 4.21719L8.55408 6.20815C8.35287 6.583 7.88391 6.72481 7.50664 6.52489C7.12937 6.32497 6.98664 5.85902 7.18786 5.48416L8.25655 3.49321Z"/>
+                        </svg>
+                      </div>
+                      
+                    </div>
+                    );
+                  }
+                })
+              
+              }
+          </div>
+
       </div>
     </div>
   );
 }
 
 export default App;
+// import React from 'react';
+// import { useState } from 'react';
+// import './App.css';
+// // import Trash from './assets/icons/trash.svg';
+// import Check from './assets/icons/check.svg';
+// import Circle from './assets/icons/circle2.svg';
+// import Plus from './assets/icons/plus.svg';
+
+// const App: React.FC = () => {
+//   const [t1 ,setT1] = useState(['*'])
+
+//   return (
+//     <div className="bg-gray-400 flex-col h-screen flex items-center justify-center">
+//       {
+//         t1.map((word,key)=>{
+//           if(word==="*"){
+//             return null
+//           }
+//           else{
+//           return(
+//             <div className='flex' key={key}>
+//               <div onClick={()=>{
+//                 t1.splice(key,1)
+//                 setT1([...t1])
+//                 console.log("bas:",key)
+//                 console.log('t1Ç:',t1)
+//                 }}>
+//                   {word}
+//               </div>
+//               <div className='flex'>
+//                 <div>{word}</div>
+//                 {
+//                   t1[key]!==''
+//                   ?<div contentEditable>{word}</div>
+
+                
+                  
+//                   :<input autoFocus defaultValue={t1[key]}
+//                   onBlur={(event)=>{
+//                     if(event.target.value ===''){
+//                       t1.splice(key,1)
+//                       setT1([...t1])
+//                       console.log("burda",t1)
+//                     }
+//                     setT1([...t1])
+//                   }} 
+//                   onChange={(event)=>{
+//                     let ids = t1;
+//                     ids[key] = event.target.value;
+//                     setT1(ids)
+//                   }} className='w-56 h-8 outline-none' type="text" id="fname" name="fname"></input>
+                
+//                 }
+                
+//               </div>
+            
+//             </div>
+//           );
+//             }
+//         })
+//       }
+//       <div onClick={()=>{
+//         setT1([...t1,''])
+//       }}>
+//         Buton
+//       </div>
+
+//     </div>
+//   );
+// }
+
+// export default App;
