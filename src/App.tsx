@@ -30,7 +30,7 @@ const App: React.FC = () => {
       <div className='w-80'>
         
           {/* header */}
-          <div style={{borderBottomWidth: 1, borderBottomColor: 'gray'}} className='flex items-center justify-between w-full h-14 pl-4 pr-2'>
+          <div style={{borderBottomWidth: 1, borderBottomColor: 'rgb(230,230,230)'}} className='flex items-center justify-between w-full h-14 pl-4 pr-2'>
               <div className='flex'>
                 <div className='bg-black w-6 h-6 flex items-center justify-center rounded-md'>
                   <img src={Checkup} alt="Checkup" />
@@ -156,7 +156,7 @@ const App: React.FC = () => {
         </div>
 
           {/* completed */}
-          <div style={{borderTopWidth: 1, borderTopColor: 'gray', display: (done.length === 1 || !bigScreen)?'none':'flex'}} className='flex flex-col'>
+          <div style={{borderTopWidth: 1, borderTopColor: 'rgb(230,230,230)', display: (done.length === 1 || !bigScreen)?'none':'flex'}} className='flex flex-col'>
               
               <div className='flex my-1 group justify-between items-center'>
                 <div className='h-14 flex items-center justify-center ml-1'>
