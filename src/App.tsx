@@ -24,7 +24,7 @@ const App: React.FC = () => {
   const [done, setDone] = useState([''])
 
   return (
-    <div className="bg-gray-400 h-screen flex items-center justify-center">
+    <div className="drop-shadow-2xl h-screen flex items-center justify-center py-10">
 
     <div style={{minHeight: bigScreen?550:112}} className='flex flex-col items-between justify-between bg-white'>
       <div className='w-80'>
@@ -35,7 +35,7 @@ const App: React.FC = () => {
                 <div className='bg-black w-6 h-6 flex items-center justify-center rounded-md'>
                   <img src={Checkup} alt="Checkup" />
                 </div>
-                <div className='ml-4 text-black'>
+                <div className='font-semibold ml-4 text-black'>
                   Todo
                 </div>
               </div>
@@ -49,12 +49,12 @@ const App: React.FC = () => {
           <div>
 
             <div className='flex ml-6 my-4 justify-between items-center'>
-              <div>
+              <div className='font-semibold'>
                 Tasks
               </div>
               <div onClick={()=>{
                 setBigscreen(!bigScreen)
-              }} className='mr-4'>
+              }} className='hover:bg-gray230 transition-colors w-6 h-6 mr-3 rounded-xl flex items-center justify-center'>
                 {
                   bigScreen?
                   <img className='-rotate-45' width={15} src={Smaller} alt="Smaller" />
@@ -72,7 +72,7 @@ const App: React.FC = () => {
                   else{
                     return(
                       <div style={{display: bigScreen?'flex':'none'}} key={i}>    
-                        <div className='flex group justify-between w-screen py-2 bg-green-200'>
+                        <div className='flex group justify-between w-screen py-2 sbg-green-200'>
 
                           <div id='testx' className='flex'>
                             <div className='w-5 h-8 flex items-center justify-center' onMouseEnter={()=>{setBubblecolor('rgb(22,22,22)')}} onMouseLeave={()=>{setBubblecolor('rgb(178,178,178)')}}>
@@ -86,12 +86,12 @@ const App: React.FC = () => {
                               arr.splice(i,1)
                               setArr([...arr])
 
-                            }} className='transition transition-colors flex items-center justify-center hover:cursor-pointer hover:bg-green-200 w-8 h-8 rounded-xl'>
+                            }} className='transition transition-colors flex items-center justify-center hover:cursor-pointer hover:bg-gray230 w-8 h-8 rounded-xl'>
                               <img src={Circle} alt="Check" />
                             </div>
                           </div>
 
-                          <div className='w-56 bg-red-200 hover:cursor-texts'>
+                          <div className='font-medium w-56 flex hover:cursor-texts'>
                             {
                               arr[i]!==''
                               ?
@@ -102,7 +102,7 @@ const App: React.FC = () => {
                                 temp[i] = event.currentTarget.textContent;
                                 setArr(temp);
                               }}  
-                              contentEditable className='w-56 h-8 outline-none flex items-center bg-white'>{arr[i]}</div>
+                              contentEditable className='w-56 min-h-8 outline-none flex items-center bg-white'>{arr[i]}</div>
                               :
                               <input autoFocus
                               onBlur={(event)=>{
@@ -143,11 +143,11 @@ const App: React.FC = () => {
             <div style={{display: bigScreen?'flex':'none'}} id='additem' onClick={(event)=>{
                 setArr([...arr,''])
             }} 
-            className='transition-colors hover:cursor-pointer hover:bg-gray-200 ml-3 my-2 bg-white items-center justify-center flex w-28 h-10 rounded-md'>
+            className='transition-colors hover:cursor-pointer hover:bg-gray-200 ml-4 my-2 bg-white items-center justify-center flex w-28 h-10 rounded-md'>
               <div className='flex items-center justify-center w-4 h-4 mr-3'>
                 <img width={14} src={Plus} alt="Plus" />
               </div>
-              <div className='text-sm'>
+              <div className='font-medium text-sm'>
                 Add item
               </div>
             </div>
@@ -167,7 +167,7 @@ const App: React.FC = () => {
                       <path d="M7.49988 12L-0.00012207 4L14.9999 4L7.49988 12Z" fill={down}/>
                     </svg>
                   </div>
-                  <div className='flex items-center'>
+                  <div className='font-semibold flex items-center'>
                     Completed {showCompleted?null:`(${done.length - 1})`}
                   </div>
                 </div>
@@ -190,9 +190,9 @@ const App: React.FC = () => {
                   }
                   else{
                     return(
-                    <div className='flex mb-2 justify-between group items-center' key={keyf}>
+                    <div className='font-medium flex mb-2 justify-between group items-start' key={keyf}>
                      
-                     <div className='flex ml-6'>
+                     <div className='w-58 flex ml-6'>
                         <div onClick={()=>{
                           arr.splice(1, 0, word);
                           setArr([...arr])
@@ -203,7 +203,7 @@ const App: React.FC = () => {
                         className='hover:bg-gray230 duration-200 transition-colors w-6 h-6 flex items-center justify-center rounded-xl'>
                           <img src={Check} alt="Check" />
                         </div>
-                        <div className='ml-2'>
+                        <div className='w-52 ml-2'>
                         {word}
                         </div>
                       </div>
