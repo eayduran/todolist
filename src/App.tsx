@@ -46,15 +46,15 @@ const App: React.FC = () => {
           </div>
 
           {/* tasks */}
-          <div>
+          <div className=''>
 
-            <div className='flex ml-6 my-4 justify-between items-center'>
+            <div className='flex ml-6 mt-3 mb-4 justify-between items-center'>
               <div className='font-semibold'>
                 Tasks
               </div>
               <div onClick={()=>{
                 setBigscreen(!bigScreen)
-              }} className='hover:bg-gray230 transition-colors w-6 h-6 mr-3 rounded-xl flex items-center justify-center'>
+              }} className='hover:bg-gray230 transition-colors w-8 h-8 mr-2 rounded-full flex items-center justify-center'>
                 {
                   bigScreen?
                   <img className='-rotate-45' width={15} src={Smaller} alt="Smaller" />
@@ -86,7 +86,7 @@ const App: React.FC = () => {
                               arr.splice(i,1)
                               setArr([...arr])
 
-                            }} className='transition transition-colors flex items-center justify-center hover:cursor-pointer hover:bg-gray230 w-8 h-8 rounded-xl'>
+                            }} className='transition transition-colors flex items-center justify-center hover:cursor-pointer hover:bg-gray230 w-8 h-8 rounded-full'>
                               <img src={Circle} alt="Check" />
                             </div>
                           </div>
@@ -163,7 +163,7 @@ const App: React.FC = () => {
                   <div onClick={()=>{
                     setShowcompleted(!showCompleted)
                   }} onMouseEnter={()=>{setDown('rgb(22,22,22)')}} onMouseLeave={()=>{setDown('rgb(178,178,178)')}} className='flex items-center justify-center mr-1 w-5 h-5'>
-                    <svg style={showCompleted?{}:{transform: 'rotate(-90deg)'}} className='transition-opacity opacity-0 group-hover:opacity-100' width="15px" height="15px" viewBox="0 0 15 15" xmlns="http://www.w3.org/2000/svg">
+                    <svg style={showCompleted?{}:{transform: 'rotate(-90deg)'}} className='transition-opacity opacity-0 group-hover:opacity-100' width="10px" height="10px" viewBox="0 0 15 15" xmlns="http://www.w3.org/2000/svg">
                       <path d="M7.49988 12L-0.00012207 4L14.9999 4L7.49988 12Z" fill={down}/>
                     </svg>
                   </div>
