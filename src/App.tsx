@@ -24,11 +24,15 @@ const App: React.FC = () => {
   const [done, setDone] = useState<any>([''])
 
   useEffect(()=>{
-    if(localStorage.arr !== '*'){
-      setArr(localStorage.arr.split(','))
+    if(localStorage.arr){
+      if(localStorage.arr !== '*'){
+        setArr(localStorage.arr.split(','))
+      }
     }
-    if(localStorage.done !== ''){
-      setDone(localStorage.done.split(','))
+    if(localStorage.done){
+      if(localStorage.done !== ''){
+        setDone(localStorage.done.split(','))
+      }
     }
   },[])
   useEffect(()=>{
