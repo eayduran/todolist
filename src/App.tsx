@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import { useState } from 'react';
 import './App.css';
 // import Trash from './assets/icons/trash.svg';
@@ -20,8 +20,23 @@ const App: React.FC = () => {
   const [down ,setDown] = useState<string>('rgb(178,178,178)')
   const [showCompleted, setShowcompleted] = useState<boolean>(true)
   const [bigScreen, setBigscreen] = useState<boolean>(true)
-  const [arr, setArr] = useState(['*'])
-  const [done, setDone] = useState([''])
+  const [arr, setArr] = useState<any>(['*'])
+  const [done, setDone] = useState<any>([''])
+
+  useEffect(()=>{
+    if(localStorage.arr !== '*'){
+      setArr(localStorage.arr.split(','))
+    }
+    if(localStorage.done !== ''){
+      setDone(localStorage.done.split(','))
+    }
+  },[])
+  useEffect(()=>{
+    localStorage.setItem('arr', arr);
+  },[arr])
+  useEffect(()=>{
+    localStorage.setItem('done', done);
+  },[done])
 
   return (
     <div className="drop-shadow-2xl h-screen flex items-center justify-center py-10">
@@ -65,7 +80,7 @@ const App: React.FC = () => {
             </div>
           
               {
-                arr.map((word,i) => {
+                arr.map((word: any,i: any) => {
                   if(word==='*'){  
                     return null
                   }
@@ -184,20 +199,20 @@ const App: React.FC = () => {
               </div>
                         
               { showCompleted?
-                done.map((word,keyf)=>{
+                done.map((word: any,key: any)=>{
                   if(word===''){
                     return null
                   }
                   else{
                     return(
-                    <div className='font-medium flex mb-2 justify-between group items-start' key={keyf}>
+                    <div className='font-medium flex mb-2 justify-between group items-start' key={key}>
                      
                      <div className='w-58 flex ml-6'>
                         <div onClick={()=>{
                           arr.splice(1, 0, word);
                           setArr([...arr])
 
-                          done.splice(keyf,1)
+                          done.splice(key,1)
                           setDone([...done])
                         }} 
                         className='hover:bg-gray230 duration-200 transition-colors w-6 h-6 flex items-center justify-center rounded-xl'>
@@ -208,7 +223,7 @@ const App: React.FC = () => {
                         </div>
                       </div>
                       <div onClick={()=>{
-                        done.splice(keyf,1)
+                        done.splice(key,1)
                         setDone([...done])
                         }} className='flex items-center justify-center h-8 w-8 mr-2 hover:cursor-pointer' onMouseEnter={()=>{setDoneTrashcolor('rgb(22,22,22)')}} onMouseLeave={()=>{setDoneTrashcolor('rgb(178,178,178)')}}>
                         {/* <img src={Trash} alt="Trash" className='transition-opacity opacity-0 group-hover:opacity-100 hover:stroke-white'/> */}
